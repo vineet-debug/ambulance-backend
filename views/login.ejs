@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin | Sign In</title>
+
+  <!-- AdminLTE & Bootstrap (via CDN for speed) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+
+  <!-- Your extra tweaks -->
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body class="hold-transition login-page">
+  <div class="login-box">
+    <!-- card -->
+    <div class="card card-outline card-primary shadow-lg">
+      <div class="card-header text-center">
+        <!-- Logo / brand name -->
+        <a href="/" class="h1 mb-0"><b>Ambulance</b>Admin</a>
+      </div>
+
+      <div class="card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <div class="alert alert-danger py-2"><%= error %></div>
+        <% } %>
+
+        <form action="/admin/login" method="POST">
+          <!-- Email -->
+          <div class="input-group mb-3">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              placeholder="Email"
+              required
+            />
+            <div class="input-group-append">
+              <div class="input-group-text"><span class="fas fa-envelope"></span></div>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div class="input-group mb-3">
+            <input
+              type="password"
+              name="password"
+              class="form-control"
+              placeholder="Password"
+              required
+            />
+            <div class="input-group-append">
+              <div class="input-group-text"><span class="fas fa-lock"></span></div>
+            </div>
+          </div>
+
+          <!-- Sign-in button -->
+          <div class="row">
+            <div class="col-12">
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-sign-in-alt mr-1"></i> Sign In
+              </button>
+            </div>
+          </div>
+        </form>
+      </div><!-- /.card-body -->
+    </div><!-- /.card -->
+  </div><!-- /.login-box -->
+
+  <!-- JS (put at end for faster first paint) -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Ambulance</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <%- include('sidebar') %>
+
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 align-items-center">
+            <div class="col-sm-6">
+              <h1>Add Ambulance</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+              <a href="/admin/ambulances" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container-fluid">
+          <form method="POST" action="/admin/addAmbulance">
+            <div class="card">
+              <div class="card-body">
+                <div class="form-group">
+                  <label>Vehicle Number</label>
+                  <input type="text" name="vehicleNumber" class="form-control" required>
+                </div>
+                <div class="form-group">
+                  <label>Vehicle Model</label>
+                  <input type="text" name="vehicleModel" class="form-control" required>
+                </div>
+                <div class="form-group form-check">
+                  <input type="checkbox" name="isActive" class="form-check-input" checked>
+                  <label class="form-check-label">Active</label>
+                </div>
+                <div class="form-group">
+                  <label>Assign Driver (optional)</label>
+                  <select name="assignedDriver" class="form-control">
+                    <option value="">Select Driver</option>
+                    <% drivers.forEach(driver => { %>
+                      <option value="<%= driver._id %>"><%= driver.fullName %></option>
+                    <% }) %>
+                  </select>
+                </div>
+              </div>
+              <div class="card-footer">
+                <button type="submit" class="btn btn-success">Save Ambulance</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>

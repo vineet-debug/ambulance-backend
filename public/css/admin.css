@@ -1,0 +1,265 @@
+/* =======================================================
+   Admin-panel custom styles  |  public/css/admin.css
+   ======================================================= */
+
+/* ----------  Root palette & helpers  ---------- */
+:root {
+  --primary: #007bff;
+  --gradient-start: #0066ff;
+  --gradient-end:   #5b2dff;
+
+  --sidebar-bg: #343a40;
+  --sidebar-width: 230px;
+  --sidebar-collapsed-width: 70px;
+
+  --card-radius: 1.25rem;
+  --transition: 0.25s all ease;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ======================================================
+   SECTION A – LOGIN PAGE
+   ====================================================== */
+body.login-page {
+  background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-page .login-box          { width: 100%; max-width: 420px; }
+.login-page .card               { border-radius: var(--card-radius); overflow: hidden;
+                                   box-shadow: 0 15px 35px rgba(0,0,0,.25); }
+.login-page .card-header        { background:#fff; border-bottom:1px solid #e9ecef; padding:1.75rem 1rem 1rem; }
+.login-page .card-header a      { font-size:2rem; font-weight:700; letter-spacing:-.5px;
+                                   color:#343a40; text-decoration:none; white-space:nowrap; line-height:1.2; }
+.login-page .card-body          { padding:2rem; }
+.login-page .input-group>.form-control      { height:46px; border-top-left-radius:.45rem; border-bottom-left-radius:.45rem; }
+.login-page .input-group-append .input-group-text { background:#f1f1f1; border-left:0;
+                                                    border-top-right-radius:.45rem; border-bottom-right-radius:.45rem; }
+.login-page .btn-primary        { background:var(--primary); border-color:var(--primary); font-weight:600;
+                                   border-radius:.45rem; box-shadow:0 2px 4px rgba(0,0,0,.2);
+                                   transition:transform .15s ease, box-shadow .15s ease; width:100%; }
+.login-page .btn-primary:hover  { transform:translateY(-2px); box-shadow:0 6px 12px rgba(0,0,0,.2); }
+.login-page .alert              { font-size:.875rem; border-radius:.45rem; padding:.6rem 1rem; }
+
+@media (max-width:576px){
+  .login-page .card-header a{ font-size:1.65rem; }
+  .login-page .card-body    { padding:1.5rem; }
+}
+
+/* ======================================================
+   SECTION B – APP LAYOUT (sidebar & main content)
+   ====================================================== */
+
+/* Wrapper flex container */
+.wrapper { display:flex; min-height:100vh; }
+
+/* ----------  Sidebar  ---------- */
+.sidebar {
+  width:var(--sidebar-width);
+  background:var(--sidebar-bg);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  transition:var(--transition);
+}
+
+.sidebar-header {
+  padding:1rem 1.25rem;
+  font-weight:700;
+  font-size:1.25rem;
+  text-align:center;
+  border-bottom:1px solid rgba(255,255,255,.1);
+  white-space:nowrap;
+}
+
+.sidebar-nav { list-style:none; margin:0; padding:0; flex-grow:1; }
+
+.sidebar-nav li a {
+  display:flex;
+  align-items:center;
+  gap:.75rem;
+  padding:.8rem 1.25rem;
+  color:rgba(255,255,255,.85);
+  font-size:.95rem;
+  text-decoration:none;
+  transition:background .15s ease;
+}
+
+.sidebar-nav li a:hover,
+.sidebar-nav li a.active {
+  background:rgba(255,255,255,.1);
+  color:#fff;
+}
+
+.sidebar-nav i { width:20px; text-align:center; }
+
+/* Collapse toggle (optional button class `.sidebar-toggle`) */
+.sidebar-toggle {
+  display:none;   /* hidden on lg, visible on sm */
+  background:none; border:none; color:#fff; width:100%; padding:.8rem 0;
+  font-size:1rem; cursor:pointer;
+}
+
+@media (max-width:992px){
+  .sidebar      { width:var(--sidebar-collapsed-width); }
+  .main-content { margin-left:var(--sidebar-collapsed-width); }
+  .sidebar-toggle { display:block; }
+  
+  /* Hide text inside links, show only icons when collapsed */
+  .sidebar-nav li a span { display:none; }
+}
+
+/* ----------  Main content  ---------- */
+.main-content {
+  flex-grow:1;
+  background:#f4f6f9;
+  padding:2rem 1.75rem;
+  transition:var(--transition);
+}
+
+/* Content header */
+.content-header { margin-bottom:1.5rem; }
+.content-header h1 {
+  font-size:1.75rem;
+  font-weight:600;
+  margin:0;
+  color:#343a40;
+}
+
+/* Cards / boxes inside content */
+.card-box {
+  background:#fff;
+  border-radius:.65rem;
+  padding:1.5rem 1.25rem;
+  box-shadow:0 3px 8px rgba(0,0,0,.05);
+  margin-bottom:1.5rem;
+}
+
+/* Example styles for tables (patients, drivers) */
+.table-wrapper {
+  background:#fff;
+  border-radius:.65rem;
+  padding:1rem;
+  box-shadow:0 3px 8px rgba(0,0,0,.05);
+  overflow-x:auto;
+}
+
+.table-wrapper table { width:100%; }
+
+/* ----------  Utilities  ---------- */
+.text-right { text-align:right!important; }
+.text-center{ text-align:center!important; }
+
+.btn {
+  display:inline-flex;
+  align-items:center;
+  gap:.5rem;
+  padding:.55rem 1rem;
+  border:none;
+  border-radius:.45rem;
+  font-size:.9rem;
+  font-weight:500;
+  cursor:pointer;
+  transition:background .15s ease;
+}
+
+.btn-primary {
+  background:var(--primary);
+  color:#fff;
+}
+
+.btn-primary:hover { background:#0056d8; }
+
+.btn-success { background:#28a745; color:#fff; }
+.btn-success:hover { background:#1e7e34; }
+
+.btn-danger  { background:#dc3545; color:#fff; }
+.btn-danger:hover { background:#bd2130; }
+
+/* ----------  Scrollbar tweak (optional) ---------- */
+.sidebar::-webkit-scrollbar { width:6px; }
+.sidebar::-webkit-scrollbar-thumb { background:rgba(255,255,255,.3); border-radius:3px; }
+
+/* --- Fix left-gap when using custom flex sidebar + AdminLTE body --- */
+.wrapper .content-wrapper {
+  margin-left: 220px !important;   /* override AdminLTE’s default 250 px */
+  flex-grow: 1;
+  background: #f4f6f9;
+  padding: 2rem 1.75rem;
+}
+
+/* Optional: nicer modal table */
+#patientModal th { width: 100px; font-weight: 600; }
+
+/* admin.css — remove extra top gap */
+.content-wrapper { padding-top: 0 !important; }
+
+/* === Sidebar full-height & tighter vertical spacing === */
+.sidebar { position: fixed; top: 0; bottom: 0; min-height: 100vh; overflow-y: auto; }
+.content-wrapper { margin-left: var(--sidebar-width); padding-top: 0 !important; }
+.content-header { margin-bottom: .75rem !important; }
+
+/* === LAYOUT FIXES =================================================== */
+
+/* 1️⃣  Sidebar is a normal flex-item (no position:fixed) so
+       it naturally pushes the content area and always fills 100 vh. */
+.wrapper            { display: flex; }
+.sidebar            { width: var(--sidebar-width); min-height: 100vh; }
+.content-wrapper    { flex: 1; padding: 1.25rem 1.75rem; margin-left: 0 !important; }
+
+/* 2️⃣  Tighten vertical whitespace */
+.content-header     { padding: .25rem 0 .5rem; margin-bottom: .5rem; }
+.card-filter        { margin-bottom: .75rem !important; }  /* helper class */
+
+/* 3️⃣  When screen < 992 px we collapse the sidebar,
+       so give content full width again. */
+@media (max-width: 991.98px){
+  .sidebar         { width: var(--sidebar-collapsed-width); }
+  .content-wrapper { padding-left: .75rem; }
+}
+
+/* Shift content over and give it padding & background */
+.content-wrapper {
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Optional: tighten up your header title */
+.content-header .container-fluid h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+/* Ensure your card/table don’t run edge-to-edge */
+.card-body {
+  padding: 0.75rem;
+}
+/* Shift content over and give it padding & background */
+.content-wrapper {
+  background: #f4f6f9;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Optional: tighten up your header title */
+.content-header .container-fluid h1 {
+  margin: 0;
+  font-size: 1.75rem;
+}
+
+/* Ensure your card/table don’t run edge-to-edge */
+.card-body {
+  padding: 0.75rem;
+}

@@ -1,0 +1,103 @@
+/* ---- Layout ---- */
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fa;
+  display: flex;
+  min-height: 100vh;
+}
+
+/* ---- Sidebar ---- */
+.sidebar {
+  width: 250px;
+  background-color: #343a40;
+  color: white;
+  min-height: 100vh;
+}
+.sidebar a {
+  color: white;
+  padding: 15px;
+  display: block;
+  text-decoration: none;
+}
+.sidebar a:hover {
+  background-color: #495057;
+}
+.sidebar-header {
+  font-size: 1.5rem;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 1px solid #495057;
+}
+
+/* ---- Main Content ---- */
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+}
+
+/* ---- Table (Listing Pages) ---- */
+.table-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #dee2e6;
+  text-align: left;
+}
+th {
+  background-color: #f1f3f5;
+}
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* ---- Forms (Add/Edit) ---- */
+.form-box {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 600px;
+}
+.form-box input, .form-box select, .form-box textarea {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+.form-box label {
+  font-weight: 500;
+}
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+  cursor: pointer;
+}
+
+/* ---- Detail View ---- */
+.profile-box {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  max-width: 700px;
+}
+.profile-box h3 {
+  margin-bottom: 20px;
+}
+.profile-item {
+  margin-bottom: 10px;
+}

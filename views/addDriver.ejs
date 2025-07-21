@@ -1,0 +1,164 @@
+<!-- views/addDriver.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add New Driver</title>
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <%- include('sidebar') %>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Page header -->
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 align-items-center">
+            <div class="col-sm-6">
+              <h1>Add New Driver</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+              <a href="/admin/drivers" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="card card-default">
+            <div class="card-header">
+              <h3 class="card-title">Driver Information</h3>
+            </div>
+            <form action="/admin/drivers/add"
+                  method="POST"
+                  enctype="multipart/form-data">
+              <div class="card-body">
+                <div class="form-group">
+                  <label>Full Name</label>
+                  <input name="fullName"
+                         class="form-control"
+                         required />
+                </div>
+                <div class="form-group">
+                  <label>Email</label>
+                  <input name="email"
+                         type="email"
+                         class="form-control"
+                         required />
+                </div>
+                <div class="form-group">
+                  <label>Phone</label>
+                  <input name="phone"
+                         class="form-control"
+                         required />
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Gender</label>
+                    <select name="gender" class="form-control">
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>License Number</label>
+                    <input name="licenseNumber"
+                           class="form-control"
+                           required />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Password</label>
+                  <input name="password"
+                         type="password"
+                         class="form-control"
+                         required />
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-6">
+                    <label>Profile Picture</label>
+                    <input type="file"
+                           name="profilePic"
+                           accept="image/*"
+                           class="form-control-file" />
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label>License Copy</label>
+                    <input type="file"
+                           name="licenseCopy"
+                           accept="image/*,application/pdf"
+                           class="form-control-file" />
+                  </div>
+                </div>
+                <h5 class="mt-4">Address</h5>
+                <div class="form-group">
+                  <input name="addressLine1"
+                         placeholder="Line 1"
+                         class="form-control"
+                         required />
+                </div>
+                <div class="form-group">
+                  <input name="addressLine2"
+                         placeholder="Line 2"
+                         class="form-control" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group col-md-4">
+                    <input name="city"
+                           placeholder="City"
+                           class="form-control"
+                           required />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <input name="state"
+                           placeholder="State"
+                           class="form-control"
+                           required />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <input name="postalCode"
+                           placeholder="Postal Code"
+                           class="form-control"
+                           required />
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer text-right">
+                <button type="submit"
+                        class="btn btn-success">
+                  <i class="fas fa-save"></i> Save
+                </button>
+                <a href="/admin/drivers"
+                   class="btn btn-secondary">
+                  Cancel
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js">
+  </script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js">
+  </script>
+</body>
+</html>

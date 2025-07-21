@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ambulance Details</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="hold-transition sidebar-mini">
+  <div class="wrapper">
+    <%- include('sidebar') %>
+
+    <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2 align-items-center">
+            <div class="col-sm-6">
+              <h1>Ambulance Details</h1>
+            </div>
+            <div class="col-sm-6 text-right">
+              <a href="/admin/ambulances" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content">
+        <div class="container-fluid">
+          <div class="card">
+            <div class="card-body">
+              <p><strong>Vehicle Number:</strong> <%= ambulance.vehicleNumber %></p>
+              <p><strong>Vehicle Model:</strong> <%= ambulance.vehicleModel %></p>
+              <p><strong>Status:</strong> 
+                <span class="badge <%= ambulance.isActive ? 'badge-success' : 'badge-danger' %>">
+                  <%= ambulance.isActive ? 'Active' : 'Inactive' %>
+                </span>
+              </p>
+              <p><strong>Assigned Driver:</strong> 
+                <% if(ambulance.assignedDriver) { %>
+                  <a href="/admin/drivers/<%= ambulance.assignedDriver._id %>">
+                    <%= ambulance.assignedDriver.fullName %>
+                  </a>
+                <% } else { %>
+                  Not Assigned
+                <% } %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
+</body>
+</html>

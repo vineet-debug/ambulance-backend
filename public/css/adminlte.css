@@ -1,0 +1,18 @@
+/* Simple AdminLTE-like styling */
+
+body { margin: 0; font-family: "Source Sans Pro",sans-serif; }
+.main-sidebar { width: 220px; position: fixed; top: 0; left: 0; height: 100%; background: #343a40; color: white; }
+.content-wrapper { margin-left: 220px; padding: 20px; }
+.sidebar .nav-link { color: #c2c7d0; padding: 10px; display:block; }
+.sidebar .nav-link.active, .sidebar .nav-link:hover { background: #495057; }
+.brand-link { padding: 1rem; display:block; background:#23272b; text-align:center; color:white; text-decoration:none;}
+.content-header { display:flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+.filters-form { display:flex; gap:10px; margin-top:10px; }
+.filters-form input, .filters-form select { padding:5px; }
+.filters-form button { padding:5px 10px; }
+.table { width:100%; border-collapse: collapse; margin-bottom: 20px; }
+.table th, .table td { padding:8px; border:1px solid #dee2e6; }
+.table-hover tbody tr:hover { background-color: #f1f1f1; }
+.btn { padding:5px 10px; text-decoration:none; color:white; border-radius:3px;}
+.btn-primary { background-color: #007bff; }
+.btn-sm { font-size: 0.875rem; }
