@@ -1,18 +1,5 @@
-# Node / React Native
 node_modules/
-.expo/
-
-# Env & secrets
-.env*
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-
-# Build output
-dist/
-build/
-
-# OS clutter
+.env
+uploads/
+*.log
 .DS_Store
-Thumbs.db

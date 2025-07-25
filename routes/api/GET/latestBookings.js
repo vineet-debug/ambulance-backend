@@ -1,0 +1,21 @@
+const express = require('express');
+const router = express.Router();
+const Booking = require('../../../models/Booking');
+
+router.get('/:patientId', async (req, res) => {
+  const { patientId } = req.params;
+  const limit = parseInt(req.query.limit) || 2;
+
+  try {
+    const bookings = await Booking.find({ patientId })
+      .sort({ date: -1 })
+      .limit(limit);
+
+    res.json({ success: true, bookings });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+});
+
+module.exports = router;
