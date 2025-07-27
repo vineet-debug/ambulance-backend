@@ -6,8 +6,10 @@ router.get('/:patientId', async (req, res) => {
   const { patientId } = req.params;
 
   try {
-    const bookings = await Booking.find({ patientId })
-      .sort({ date: -1 });
+    const bookings = await Booking.find({ patient: patientId })
+      .sort({ createdAt: -1 })
+      .populate('driver', 'fullName')
+      .populate('ambulance', 'vehicleNumber');
 
     res.json({ success: true, bookings });
   } catch (err) {
