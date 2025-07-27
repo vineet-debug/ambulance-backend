@@ -38,23 +38,17 @@ router.post('/', async (req, res) => {
     const booking = await Booking.findOne({
       driver: driverId,
       status: { $nin: ['completed', 'cancelled'] },
-    }).populate('patient');
+    });
 
     if (!booking) {
-      console.log('[api] active booking not found for driver', driverId);
       return res.json({ success: true, driver });
     }
 
-    // ✅ Validate coordinates before emitting
     const lat = parseFloat(latitude);
     const lng = parseFloat(longitude);
 
-    if (
-      isNaN(lat) || isNaN(lng) ||
-      lat == null || lng == null
-    ) {
-      console.warn('[api] Skipping socket emit: Invalid coordinates', { lat, lng });
-    } else {
+    if (!isNaN(lat) && !isNaN(lng)) {
+      const io = req.app.get('io');
       const payload = {
         bookingId: booking._id.toString(),
         latitude: lat,
@@ -63,8 +57,6 @@ router.post('/', async (req, res) => {
       };
 
       console.log('[api] emit driver_location → room:', booking._id.toString(), payload);
-
-      const io = req.app.get('io');
       io.to(booking._id.toString()).emit('driver_location', payload);
     }
 
