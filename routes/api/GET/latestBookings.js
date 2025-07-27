@@ -7,9 +7,11 @@ router.get('/:patientId', async (req, res) => {
   const limit = parseInt(req.query.limit) || 2;
 
   try {
-    const bookings = await Booking.find({ patientId })
-      .sort({ date: -1 })
-      .limit(limit);
+    const bookings = await Booking.find({ patient: patientId })
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .populate('driver', 'fullName')
+      .populate('ambulance', 'vehicleNumber');
 
     res.json({ success: true, bookings });
   } catch (err) {
