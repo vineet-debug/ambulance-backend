@@ -1,3 +1,4 @@
+// backend/routes/api/POST/acceptBooking.js
 const router   = require('express').Router();
 const Booking  = require('../../../models/Booking');
 const Driver   = require('../../../models/Driver');
@@ -13,11 +14,20 @@ router.post('/', async (req, res) => {
     if (!driver || !booking)
       return res.status(404).json({ success:false, message:'Not found' });
 
-    /* someone else got it first */
+    // 🛑 Already assigned to someone else
     if (booking.driver && String(booking.driver) !== driverId)
       return res.json({ success:false, code:'ALREADY_ASSIGNED', message:'Another driver took it.' });
 
-    /* assign everything + OTP */
+    // ✅ If same driver already assigned → skip reassigning
+    if (String(booking.driver) === driverId && booking.status === 'on_the_way') {
+      const populated = await Booking.findById(booking._id)
+        .populate('driver', 'fullName profilePic')
+        .populate('ambulance', 'vehicleNumber')  // ✅ use vehicleNumber here
+        .populate('patient', 'fullName email phone');
+      return res.json({ success:true, booking:populated });
+    }
+
+    // ✅ Assign and generate new OTP
     booking.driver    = driverId;
     booking.ambulance = driver.assignedAmbulance || null;
     booking.otp       = genOtp();
@@ -25,9 +35,9 @@ router.post('/', async (req, res) => {
     await booking.save();
 
     const populated = await Booking.findById(booking._id)
-      .populate('driver','fullName profilePic')
-      .populate('ambulance','number')
-      .populate('patient','fullName');
+      .populate('driver', 'fullName profilePic')
+      .populate('ambulance', 'vehicleNumber')  // ✅ make sure vehicleNumber is populated
+      .populate('patient', 'fullName email phone');
 
     const io = req.app.get('io');
     io?.to(populated.patient._id.toString()).emit('booking_assigned', populated);
