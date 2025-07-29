@@ -1,20 +1,19 @@
 // routes/api/POST/savePushToken.js
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 
 const Patient = require('../../../models/Patient');
-const Driver  = require('../../../models/Driver');
+const Driver = require('../../../models/Driver');
 
 /**
- * Body  { userId, role, token }
- *  role = 'patient' | 'driver'
- * Stores Expo push token on the appropriate user document.
+ * Body: { userId, role, token }
+ * Stores Expo push token in patient or driver model.
  */
 router.post('/', async (req, res) => {
   const { userId, role, token } = req.body;
 
   if (!userId || !role || !token) {
-    return res.status(400).json({ success:false, message:'userId, role, token required' });
+    return res.status(400).json({ success: false, message: 'userId, role, token required' });
   }
 
   try {
@@ -22,17 +21,18 @@ router.post('/', async (req, res) => {
     const updated = await Model.findByIdAndUpdate(
       userId,
       { pushToken: token },
-      { new:true }
+      { new: true }
     );
 
     if (!updated) {
-      return res.status(404).json({ success:false, message:'User not found' });
+      return res.status(404).json({ success: false, message: 'User not found' });
     }
 
-    res.json({ success:true });
+    console.log(`[PushToken] Saved for ${role} ${userId}`);
+    res.json({ success: true });
   } catch (err) {
     console.error('savePushToken error', err);
-    res.status(500).json({ success:false, message:'Server error' });
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 
