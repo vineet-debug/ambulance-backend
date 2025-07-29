@@ -16,6 +16,7 @@ const driverSchema = new mongoose.Schema({
   phone: String,
   email: String,
   password: String,
+  pushToken: { type: String },
   verified: { type: Boolean, default: false },
   assignedAmbulance: { type: mongoose.Schema.Types.ObjectId, ref: 'Ambulance', default: null },
   available: { type: Boolean, default: true },
