@@ -1,6 +1,7 @@
-const router   = require('express').Router();
-const Booking  = require('../../../models/Booking');
-const Driver   = require('../../../models/Driver');
+// routes/api/POST/createBooking.js
+const router = require('express').Router();
+const Booking = require('../../../models/Booking');
+const Driver = require('../../../models/Driver');
 const sendPush = require('../../../utils/sendPush');
 
 router.post('/', async (req, res) => {
@@ -8,54 +9,64 @@ router.post('/', async (req, res) => {
     const {
       patientId,
       pickupLat, pickupLng, pickupAddress,
-      dropLat,   dropLng,   dropAddress,
+      dropLat, dropLng, dropAddress,
     } = req.body;
 
-    /* nearest verified + available driver */
     const [nearest] = await Driver.aggregate([
       {
         $geoNear: {
-          near:{type:'Point',coordinates:[pickupLng,pickupLat]},
-          distanceField:'distance',
-          spherical:true,
-          maxDistance:10_000,
-          query:{ verified:true, available:true, assignedAmbulance:{ $ne:null } },
+          near: { type: 'Point', coordinates: [pickupLng, pickupLat] },
+          distanceField: 'distance',
+          spherical: true,
+          maxDistance: 10_000,
+          query: {
+            verified: true,
+            available: true,
+            assignedAmbulance: { $ne: null },
+          },
         },
       },
-      { $limit:1 },
+      { $limit: 1 },
     ]);
-    if (!nearest)
-      return res.json({ success:false, message:'No driver nearby' });
 
-    /* create booking w/out driver yet */
-    const booking = await Booking.create({
-      patient:patientId,
-      pickupAddress,
-      pickupLocation:{ type:'Point', coordinates:[pickupLng,pickupLat] },
-      dropAddress,
-      dropLocation:{ type:'Point', coordinates:[dropLng,dropLat] },
-      status:'new',
-    });
-
-    /* notify that single driver */
-    if (nearest.expoPushToken) {
-      sendPush(nearest._id, {
-        title:'New Ambulance Request',
-        body:`Pickup at ${pickupAddress}`,
-        data:{ bookingId:booking._id.toString() },
-      });
+    if (!nearest) {
+      return res.json({ success: false, message: 'No driver nearby' });
     }
+
+    const booking = await Booking.create({
+      patient: patientId,
+      pickupAddress,
+      pickupLocation: { type: 'Point', coordinates: [pickupLng, pickupLat] },
+      dropAddress,
+      dropLocation: { type: 'Point', coordinates: [dropLng, dropLat] },
+      status: 'new',
+    });
 
     const io = req.app.get('io');
     io?.to(nearest._id.toString()).emit('newBooking', {
-      bookingId : booking._id,
+      bookingId: booking._id,
       pickupAddress,
     });
 
-    res.json({ success:true, bookingId:booking._id, patientId });
+    // ✅ Send push if token exists
+    if (nearest.pushToken) {
+      await sendPush({
+        to: nearest.pushToken,
+        title: 'New Ambulance Request',
+        body: `Pickup at ${pickupAddress}`,
+        data: {
+          type: 'new_booking',
+          bookingId: booking._id.toString(),
+        },
+      });
+    } else {
+      console.warn('[Push] No pushToken for driver:', nearest._id);
+    }
+
+    res.json({ success: true, bookingId: booking._id, patientId });
   } catch (e) {
-    console.error(e);
-    res.status(500).json({ success:false, message:'Server error' });
+    console.error('[createBooking] Error:', e);
+    res.status(500).json({ success: false, message: 'Server error' });
   }
 });
 
