@@ -14,7 +14,7 @@ router.post('/', async (req, res) => {
     const [nearest] = await Driver.aggregate([
       {
         $geoNear: {
-          near:{ type:'Point', coordinates:[pickupLng, pickupLat] },
+          near:{type:'Point',coordinates:[pickupLng,pickupLat]},
           distanceField:'distance',
           spherical:true,
           maxDistance:10_000,
@@ -23,10 +23,12 @@ router.post('/', async (req, res) => {
       },
       { $limit:1 },
     ]);
-    if (!nearest) return res.json({ success:false, message:'No driver nearby' });
+
+    if (!nearest)
+      return res.json({ success:false, message:'No driver nearby' });
 
     const booking = await Booking.create({
-      patient: patientId,
+      patient:patientId,
       pickupAddress,
       pickupLocation:{ type:'Point', coordinates:[pickupLng,pickupLat] },
       dropAddress,
@@ -34,16 +36,11 @@ router.post('/', async (req, res) => {
       status:'new',
     });
 
-    const io = req.app.get('io');
-    io?.to(nearest._id.toString()).emit('newBooking', {
-      bookingId: booking._id,
-      pickupAddress,
-    });
-
+    // ✅ FIX: Now sends push token correctly
     if (nearest.pushToken) {
-      sendPush({
+      await sendPush({
         to: nearest.pushToken,
-        title: 'New Ambulance Request',
+        title: '🚨 New Ambulance Booking',
         body: `Pickup at ${pickupAddress}`,
         data: {
           type: 'new_booking',
@@ -52,9 +49,15 @@ router.post('/', async (req, res) => {
       });
     }
 
+    const io = req.app.get('io');
+    io?.to(nearest._id.toString()).emit('newBooking', {
+      bookingId : booking._id,
+      pickupAddress,
+    });
+
     res.json({ success:true, bookingId:booking._id, patientId });
   } catch (e) {
-    console.error('createBooking error', e);
+    console.error(e);
     res.status(500).json({ success:false, message:'Server error' });
   }
 });
