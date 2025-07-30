@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 
 module.exports = async function sendPush({ to, title, body, data }) {
   try {
-    await fetch('https://exp.host/--/api/v2/push/send', {
+    const res = await fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -15,6 +15,9 @@ module.exports = async function sendPush({ to, title, body, data }) {
         data,
       }),
     });
+
+    const result = await res.json();
+    console.log('🔔 Push response:', result);
   } catch (err) {
     console.error('Push notification error', err);
   }
