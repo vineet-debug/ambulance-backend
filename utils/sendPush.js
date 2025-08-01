@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 const admin = require('firebase-admin');
 const path = require('path');
-d44e2b7 (Push backend updates with push notification integration)
+
 
 // Only initialize once
 if (!admin.apps.length) {
